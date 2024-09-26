@@ -18,4 +18,4 @@ int main() {
 
     // Step 4: Richiedere l'importo della banconota
     printf("Inserisci l'importo della banconota (deve essere superiore al totale da pagare): ");
-    scanf("%f", &importo_banconota);
+    scanf("%f", &importobanconota);
