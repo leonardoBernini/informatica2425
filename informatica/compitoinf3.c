@@ -10,10 +10,10 @@ int main() {
     studentiUnder15=0
 
     printf("Inserisci il numero totale di studenti: ");
-    scanf("%d", &numerostudenti);
+    scanf("%f", &numerostudenti);
 
     printf("Inserisci il numero di studenti con meno di 15 anni: ");
-    scanf("%d", &studentiunder15);
+    scanf("%f", &studentiunder15);
 
     printf("Inserisci il costo del biglietto intero: ");
     scanf("%f", &costobiglietto);

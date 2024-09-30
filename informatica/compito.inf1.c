@@ -5,7 +5,7 @@ e che il numero degli alunni deve essere letto in INPUT
 #include <stdio.h>
 
 float main() {
-    float costobiglietti,nDocenti,nAlunni,costoTotale;
+    float costobiglietti,nDocenti,nAlunni,costoTotale;//inserire le variabili
     costobiglietti=12;
     nDocenti=2;
     nAlunni=0,
@@ -14,8 +14,10 @@ float main() {
     printf("inserisci il numero degli alunni ");
     scanf("%f",&nAlunni);
    
-    costoTotale=(costobiglietti*nAlunni)+(2*6);
+    costoTotale=(costobiglietti*nAlunni)+(2*6);//calcolo
 
     printf("il costo totale è di: %f",costoTotale);
+   
+    return 0
     
 }
