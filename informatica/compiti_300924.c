@@ -9,15 +9,15 @@ int main(){
 
     if (A% 3 == 0 ){
         if(A%5==0){
-            printf("%d è divisibile per 3 e 5, A ");
+            printf("%d è divisibile per 3 e 5, A");
         }
         else{
-            printf("%d è divisibile per 3 ma non per 5, A ");
+            printf("%d è divisibile per 3 ma non per 5, A");
         }
    
     }
     else{
-        printf(""%d non è divisibile per 3, A ");
+        printf("%d non è divisibile per 3, A ");
     }
     return 0;
 }
