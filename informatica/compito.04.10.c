@@ -24,7 +24,6 @@ int main() {
 
     printf("Perimetro: %f", perimetro);
     printf("Area: %f", area); 
-
     return 0;
-    
+
 }
