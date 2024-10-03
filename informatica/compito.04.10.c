@@ -23,7 +23,8 @@ int main() {
     }
 
     printf("Perimetro: %f", perimetro);
-    printf("Area: %f", area);
+    printf("Area: %f", area); 
 
     return 0;
+    
 }
