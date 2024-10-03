@@ -65,7 +65,6 @@ int main(){
     n5=n4;
     n5=temp;
     })
-    printf("i valori in ordine crescnete sono: %d%d%d%d%d",n1, n2, n3, n4, n5);
-    return 0
+    printf("i valori in ordine crescnete sono: %d%d%d%d%d ",n1, n2, n3, n4, n5);    return 0;
 }
 
