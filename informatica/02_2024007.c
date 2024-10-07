@@ -13,6 +13,6 @@ int main(){
     if(cifra&2==0)
         printf("il numero %d è pari, num");
     else
-    print("il numero %d è dispari", num);
+     print("il numero %d è dispari", num);
 
 }
