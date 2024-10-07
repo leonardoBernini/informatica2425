@@ -37,8 +37,4 @@ int main(){
     media=(n1+n2+n3)/3;
     printf("\nla media vale: %.f", media);
     return 0;
-
-    
-
-
 }
