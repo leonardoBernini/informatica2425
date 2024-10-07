@@ -12,7 +12,7 @@ int main(){
 
     q=num/10;
     r=num%10;
-    printf(" %d è la prima cifra", &r);
+    printf("&r è la prima cifra:", %d);
     
     r=q%10;
     q=q/10;
