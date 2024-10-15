@@ -1,147 +1,140 @@
 //DATE DUE DATE ESPRESSE IN g, m, a DETERMINARE LA DATA PIU' RECENTE
+
+
 #include <stdio.h>
-
 int main(){
-    int giorno, mese, anno, data1, data2, bisestile, giorno1, mese1, anno1;
-    
-    printf("inserisci la prima data"); 
-    scanf("%d%d%d", &giorno, &mese, &anno);
-
-      if(anno%100==0){
-        if (anno%400==0){
-            printf("L'anno è bisestile");
+	int a1, a2, g1, g2, m1, m2, bisestile;
+	
+	//richiesta prima data
+	printf("Inserisci la prima data nel formato g m aaaa: ");
+	scanf("%d%d%d", &g1, &m1, &a1);
+	printf("%d/%d/%d", g1, m1, a1);//stampa di verifica step by step
+	//richiesta seconda data
+	printf("\nInserisci la seconda data nel formato g m aaaa: ");
+	scanf("%d%d%d", &g2, &m2, &a2);
+	printf("%d/%d/%d", g2, m2, a2);//stampa di verifica step by step
+	//una volta verificati i printf li cancelliamo o li commentiamo
+	
+	//VERIFICA PRIMA DATA ATTENDIBILE
+	if(a1%100==0){
+        if (a1%400==0){
+            printf("\nL'anno della prima data è bisestile");
             bisestile=1;
         }
     }
     else{
-        if (anno%4==0){
-            printf("L'anno è bisestile");
+        if (a1%4==0){
+            printf("\nL'anno della prima data è bisestile");
             bisestile=1;
         }
     }
-    //controllo del mese e del giorno
-    if (mese>=1 && mese <=12){
-        if (mese==2){
-            if(giorno>=1 && giorno<=28+bisestile){
-                printf("\nLa data è accettabile");
+    //controllo del m1 e del g1
+    if (m1>=1 && m1 <=12){
+        if (m1==2){
+            if(g1>=1 && g1<=28+bisestile){
+                printf("\nLa prima data è accettabile");
             }
             else{
-                printf("\nLa data non è accettabile");
+                printf("\nLa prima data non è accettabile");
             }
         }
         else{
-            if( mese==11 || mese==4 || mese==6 || mese==9){
-                if (giorno>=1 && giorno<=30){
-                    printf("\nLa data è accettabile");
+            if( m1==11 || m1==4 || m1==6 || m1==9){
+                if (g1>=1 && g1<=30){
+                    printf("\nLa prima data è accettabile");
                 }
                 else{
-                    printf("\nLa data non è accettabile");
+                    printf("\nLa prima data non è accettabile");
                 }
             }
             else{
-                if (giorno>=1 && giorno<=31){
-                    printf("\nLa data è accettabile");
+                if (g1>=1 && g1<=31){
+                    printf("\nLa prima data è accettabile");
                 }
                 else{
-                    printf("\nLa data non è accettabile");
+                    printf("\nLa prima data non è accettabile");
                 }
             }
         }
     }
     else{
-        printf("\nLa data non è accettabile");
+        printf("\nLa prima data non è accettabile");
     }
-
-
-   
-   
-    printf("inserisci la seconda data");
-    scanf("%d%d%d", &giorno1, &mese1, &anno1);
-
-      if(anno1%100==0){
-        if (anno1%400==0){
-            printf("L'anno è bisestile");
+    //prima di controllare la seconda data riposiziono la variabile bisestile a 0
+    bisestile=0;
+    //VERIFICA SECONDA DATA ATTENDIBILE
+	if(a2%100==0){
+        if (a2%400==0){
+            printf("\nL'anno della seconda data è bisestile");
             bisestile=1;
         }
     }
     else{
-        if (anno1%4==0){
-            printf("L'anno è bisestile");
+        if (a2%4==0){
+            printf("\nL'anno della seconda data è bisestile");
             bisestile=1;
         }
     }
-    //controllo del mese e del giorno
-    if (mese1>=1 && mese1 <=12){
-        if (mese1==2){
-            if(giorno1>=1 && giorno<=28+bisestile){
-                printf("\nLa data è accettabile");
+    //controllo del m1 e del g1
+    if (m2>=1 && m2<=12){
+        if (m2==2){
+            if(g2>=1 && g2<=28+bisestile){
+                printf("\nLa seconda data è accettabile");
             }
             else{
-                printf("\nLa data non è accettabile");
+                printf("\nLa seconda data non è accettabile");
             }
         }
         else{
-            if( mese1==11 || mese1==4 || mese1==6 || mese1==9){
-                if (giorno1>=1 && giorno1<=30){
-                    printf("\nLa data è accettabile");
+            if( m2==11 || m2==4 || m2==6 || m2==9){
+                if (g2>=1 && g2<=30){
+                    printf("\nLa seconda data è accettabile");
                 }
                 else{
-                    printf("\nLa data non è accettabile");
+                    printf("\nLa seconda data non è accettabile");
                 }
             }
             else{
-                if (giorno1>=1 && giorno1<=31){
-                    printf("\nLa data è accettabile");
+                if (g2>=1 && g2<=31){
+                    printf("\nLa seconda data è accettabile");
                 }
                 else{
-                    printf("\nLa data non è accettabile");
+                    printf("\nLa seconda data non è accettabile");
                 }
             }
         }
     }
     else{
-        printf("\nLa data non è accettabile");
+        printf("\nLa seconda data non è accettabile");
     }
 
-
-    if(anno>anno1){
-        printf("la prima data è piu recente ");
-    }
-    else{
-        if(anno1>anno){
-            printf("la seconda data è piu recente");
-    
-        }
-        else{
-            if(mese>mese1){
-                printf("la prima data è piu recente ");
-            }
-            else{
-                if(mese1>mese){
-                    printf("la seconda data è piu recente "); 
-                }
-            }
-                 else{
-                    if(giorno>giorno1){
-                        printf("la prima data è piu recente ");
-                    }
-                    else{
-                        if(giorno1>giorno){
-                        printf("la seconda data è piu recente ");
-                        }
-                    }
-                         else{
-                            printf("le date sono uguali");
-                         }
-                    }
-                }
-            }   
-
-        }
-    }
-}    
-
-
+	//CONTROLLIAMO QUALE DATA E' LA PIU' RECENTE
+	if(a1>a2)
+		printf("\nLa data %d/%d/%d è quella più recente", g1, m1, a1);
+	else{
+		if(a1==a2){
+			if(m1>m2)
+				printf("\nLa data %d/%d/%d è quella più recente", g1, m1, a1);
+			else{ 
+				if (m1==m2){
+					if(g1>g2)
+						printf("\nLa data %d/%d/%d è quella più recente", g1, m1, a1);
+					else{
+						if(g1==g2)
+							printf("\nLe date sono uguali");
+						else 
+							printf("\nLa data %d/%d/%d è quella più recente", g2, m2, a2);
+					}
+				}
+				else
+					printf("\nLa data %d/%d/%d è quella più recente", g2, m2, a2);
+			}	
+		}
+		else
+			printf("\nLa data %d/%d/%d è quella più recente", g2, m2, a2);
+	}
+		
+}
         
 
 
