@@ -58,15 +58,15 @@ int main(){
             }
             break;
         case 4:
-            if( a/b==0 ){
+            if( a%b==0 ){
                 printf("\n%d e multiplo di %d ", a, b);
 
             }
-            else if(b/a==0){
+            else if(b%a==0){
                 printf("\n%d e multiplo di %d ", b, a);
             }
             else{
-                printf("nessun numero è multiplo dell'altro");
+                printf("\nnessun numero è multiplo dell'altro");
             }
             break;
         default:
