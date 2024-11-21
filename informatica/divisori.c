@@ -44,4 +44,5 @@ int main(){
    if(flag==2 && n!=2 && n!=-2){
         printf("%d è un numero primo", n);
    }
+   return 0;
 }
