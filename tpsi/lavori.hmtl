@@ -1,0 +1,57 @@
+<html>
+	<head><title>Lavori di 3I</title></head>
+	<body>	
+		<h1>Small</h1>
+		<p>Questo testo è normale <small> Questo è un testo piccolo </small></p><br>
+		<p>Questo è un esempio di codice sorgente: <code>printf("Questo è un codice");</code></p></br>
+		questo è un esempiodi tag blockquote: <blockquote> cite= "https//wikipedia.com" <p>questa è una citazione</p></blockquote>
+		<p>il linguaggio web più famoso è <abbr title ="HyperText Murkup Language">HTML</abbr> </p>
+		<p>la formula dell'acqua e H<sub>2</sub>0 </p>
+		<p>la formula dell'acqua e x<sup>2</sup> </p>
+		<audio controls>
+		<source src="horse.ogg"type="audio/ogg">
+		</audio>
+		<h1>Tag aside</h1>
+		<p>
+		Ieri sono stato a Milano
+		<aside>
+		Milano è una città italiana capoluogo della regione lombardia
+		</aside>
+		</p>
+		<h1>Tag Summary</h1>
+		<details>
+			<summary>Menu numero 1</summary>
+			<p>Menu numero uno esteso</p>
+		</details>
+		<details>
+			<summary>Menu numero 2</summary>
+			<p>Menu numero due esteso</p>
+		</details>
+		<p>l'<abbr title="organizzazione mondiale della sanità">OMS</abbr> gestisce la sanità in tutto il mondo</p>
+		<h1>Tag Div</h1>
+		<div>
+			<p>Il tat divve è un contenitore non ben definito che puo essere usato per integrare CSS</p>
+
+		</div>
+		<p>nome utente: <bdi>enrico</bdi></p>
+		<nav>
+			<a href="/google/">GOOGLE</a>|
+			<a href="/firefox/">FIREFOX</a>|
+		</nav>
+		<main>
+			<h1> questo sito é professionale </h1>
+			<p> lo userai per le tue difficoltà </p>
+			<article>
+				<h2>GOOGLE</h2>
+			<p> é un motore di ricerca </p>
+		</article>
+		</main>
+		ciao
+		
+		<dialog id="dialogo">
+			<p>Questo e un dialogo. </p>
+			<button onclick="document.getElementbyid('dialogo').close()"chiudi</button>
+		</dialog>
+			<button onclick="document.getElementbyid('dialogo').close()"apri dialogo</button>
+	</body>
+</html>
