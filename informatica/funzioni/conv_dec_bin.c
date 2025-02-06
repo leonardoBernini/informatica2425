@@ -7,7 +7,7 @@ int main(){
     long conv;
 
     do{
-        printf("inserisci un numero");
+        printf("inserisci un numero: ");
         scanf("%d", &num);
     }while(num<0);
     conv=converti(num);
@@ -21,7 +21,7 @@ long converti(int _n){
     while(quoziente!=0){
         resto=quoziente%2;
         quoziente=quoziente/2;
-        _conv=pow(10,cont);
+        _conv+=resto*pow(10,cont);
         cont++;
 
     }
