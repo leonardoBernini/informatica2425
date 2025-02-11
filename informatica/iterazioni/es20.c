@@ -1,4 +1,5 @@
 /*DATI  DUE  NUMERI  A  PIU' CIFRE(STESSO NUMERO DI CIFRE) SCAMBIARE TRA DI LORO LE CIFRE DI POSIZIONE PARI */
+
 #include <stdio.h>
 int main(){
     int n,np,nd,n2,cifre=0,cifre2=0,nf1=0,nf2=0,divisore=1;

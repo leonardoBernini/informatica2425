@@ -18,7 +18,7 @@ int main(){
         max=n2;
         if(max<n3)
             max=n3;
-}
+    }
     else
         if(max<n3)
             max=n3;
