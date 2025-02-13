@@ -1,7 +1,7 @@
+/*lavoro di Seddiq, Leonardo e Ihab*/
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
-
 void griglia(char *a1, char *a2, char *a3, char *b1, char *b2, char *b3, char *c1, char *c2, char *c3) {
     int i , j;
     printf("\n  1    2    3\n");
