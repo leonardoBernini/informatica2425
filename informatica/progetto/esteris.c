@@ -37,7 +37,7 @@ void opzioni(){
 }
 int main(){
     
-    int turno = 0, opzione, leo=0;
+    int turno = 0, opzione;
     char g1,g2;
     char a1 = ' ', a2 = ' ', a3 = ' ', b1 = ' ', b2 = ' ', b3 = ' ', c1 = ' ', c2 = ' ', c3 = ' ';
     char simbolo;
