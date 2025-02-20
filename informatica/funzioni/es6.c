@@ -7,14 +7,26 @@ Lunghezza=17
 E’ un noto problema aperto stabilire se ogni sequenza di Collatz termina (cioè, se arriva a 1).  
 Scrivere una funzione che, dato un numero, (passando il numero per indirizzo) calcoli ogni volta il nuovo valore di n, determinando così la sequenza di Collatz del numero n e la sua lunghezza.
 N.B.: nel testare il programma inserite ad esempio una volta n=7 e poi n=9*/
-include <stdio.h>
+#include <stdio.h>
+void sequenzacollaz(int *_n);
 int main(){
-    int n,codez;
-    
-    printf("Inserisci un numero intero positivo: ");
-    scanf("%d", &n);
-    
-   
-    
-    return 0;
+    int n,lungezza=0;
+    do{
+        printf("inserisci un valore");
+        scanf("%d",&n);
+    }while(n<=0);
+    printf("la sequenza di %d e\' :\n", n);
+    lungezza++;
+    while(n!=1){
+        sequenzacollaz(&n);
+        printf("\n%d",n);
+        lungezza++;
+    }
+}
+void sequenzacollaz(int *_n){
+    if((*_n)%2==1){
+        (*_n)-(*_n)*3+1;
+    }
+    else
+        (*_n) =(*_n)/2;
 }
