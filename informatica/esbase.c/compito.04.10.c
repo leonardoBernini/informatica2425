@@ -1,5 +1,4 @@
-//Scrivi un programma che legge in input il valore di due lati di un quadrilatero,
-// individua se si tratta di un quadrato o di un rettangolo e ne calcola il perimetro e l’area.
+//pow(n1, 1.0 / n)
 #include <stdio.h>
 
 int main() {
