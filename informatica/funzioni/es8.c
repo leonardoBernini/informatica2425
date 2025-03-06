@@ -27,6 +27,6 @@ int fattori(int n){
             fattore=1;
         } 
         cnt++;
-    }
+    }""
     return n;
 }

@@ -7,6 +7,9 @@ int main(){
     do{
         printf("inserisci un numero: ");
         scanf("%d", &n);
+        if(n==0){
+            break;
+        }
         r=r+n;
         cnt++;
         if(cnt==4 && n!=0){
