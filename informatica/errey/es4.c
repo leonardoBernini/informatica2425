@@ -12,10 +12,10 @@ int main(){
     int Vet[DIM];
     int max=100, min=1;
     float tot=0;
-    randomvet(Vet,DIM, max, min);
+    riempiVettoreOrdinatoCasuale(Vet,DIM, min, max);
     for(int i=0;i<DIM;i++){
         printf("%d-",Vet[i]);
         tot+=Vet[i];
     }
-    printf("la media è di: %f",tot/DIM);
+    printf("\b\nla media è di: %f",tot/DIM);
 }
