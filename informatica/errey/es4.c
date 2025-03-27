@@ -17,5 +17,5 @@ int main(){
         printf("%d-",Vet[i]);
         tot+=Vet[i];
     }
-    printf("\b\nla media è di: %f",tot/DIM);
+    printf("\nla media è di: %f",tot/DIM);
 }

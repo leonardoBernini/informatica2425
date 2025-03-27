@@ -1,9 +1,26 @@
-/*Crea i file necessari per una libreria che contenga le funzioni principali degli 
-array (come quella fatta in classe). Quindi scrivi un programma che permetta di riempire un vettore 
-di 30 elementi con valori casuali compresi tra 0 e 10 e una funzione che restituisca il numero
-di volte in cui compare un valore (compreso tra 0 e 10) scelto dall'utente*/
-#include <stdio.h>
-
-int main(){
-    
+#include <time.h>
+ #include "libreria.h"
+ #include "libreria.c"
+ 
+ 
+ int main(){
+    int num=0, vett[10], pos=0;
+    srand(time(NULL));
+    printf("inserisci un valore: ");
+    scanf("%d", &vett[0]);
+    for(int i=1; i<10; i++){
+        //printf("inserisci un valore: ");
+        //scanf("%d", &num);
+        num = rand()%7;
+        pos=trovaPosizione(vett, i, num); 
+        shiftDx(vett, i, pos);
+        vett[pos]=num;
+    }
+    for(int i=0; i<10; i++) printf("%d - ", vett[i]);
+    int trovato = ricercaBinaria(vett, 10, 0, 9, 23);
+     if(trovato == -1){
+        printf("l'elemento cercato non esiste nel vettore");
+    } else {
+        printf("l'elemento trovato è in posizione %d: %d", trovato, vett[trovato]);
+    }
 }
