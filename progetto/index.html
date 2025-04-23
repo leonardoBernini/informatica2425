@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Progetto Arduino</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="utf-8" />
+    <link href="style.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+    <h1 class="titolo">Progetto Arduino: di Leonardo Bernini e Sebastian Cuoghi</h1>
+    <div id="contenitore">
+        <div id="header">
+            <h2>Password ambientale dinamica</h2>
+        </div>
+        <div id="nav">
+            <a href="#descrizione">Descrizione</a> |
+            <a href="#componenti">Componenti</a> |
+            <a href="#codice">Codice</a> |
+            <a href="#github">GitHub</a>
+        </div>
+        <div id="immagine">
+            <img src="develop.jpg" alt="Schema circuito Arduino LM35">
+        </div>
+        <div id="description">
+            <h3 style="color: magenta" id="descrizione">Descrizione del progetto</h3>
+            <p>
+                Questo semplice progetto permette di misurare la temperatura utilizzando il sensore LM35 e una scheda Arduino UNO.
+                Il sensore invia un segnale analogico proporzionale alla temperatura, che viene letto e convertito in gradi Celsius da Arduino.
+                Il risultato viene mostrato sul monitor seriale ogni secondo.
+            </p>
+        </div>
+        <div id="componenti">
+            <h3 style="color: magenta" id="componenti">Componenti utilizzati</h3>
+            <ul>
+                <li>1x Arduino UNO</li>
+                <li>1x Sensore di temperatura LM35</li>
+                <li>Cavi jumper</li>
+                <li>Breadboard</li>
+                <li>USB cable</li>
+            </ul>
+        </div>
+        <div id="codice">
+            <h3 style="color: magenta" id="codice">Codice Arduino</h3>
+            <pre>
+int lm35Pin = A0;
+float temperatura;
+
+void setup() {
+  Serial.begin(9600);
+}
+
+void loop() {
+  int valore = analogRead(lm35Pin);
+  temperatura = valore * 0.48828125;
+  Serial.print("Temperatura: ");
+  Serial.print(temperatura);
+  Serial.println(" °C");
+  delay(1000);
+}
+            </pre>
+        </div>
+        <div id="link">
+            <h3 style="color: magenta" id="github">Link al progetto</h3>
+            <p>
+                il nostro progetto lo si può trovare su Tinkercard: <br>
+                <a href="https://github.com/esempio/sensore-temperatura-arduino" target="_blank">➡️ link di Tinkercard</a>
+            </p>
+        </div>
+        <div id="footer">
+            <p>Creato da Seba e Leo | Ultimo aggiornamento: Aprile 2025</p>
+        </div>
+    </div>
+</body>
+</html>
