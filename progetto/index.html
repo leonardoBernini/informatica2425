@@ -16,54 +16,262 @@
             <a href="#descrizione">Descrizione</a> |
             <a href="#componenti">Componenti</a> |
             <a href="#codice">Codice</a> |
-            <a href="#github">GitHub</a>
+            <a href="#tinkercard">Tinkercard</a>
         </div>
         <div id="immagine">
-            <img src="develop.jpg" alt="Schema circuito Arduino LM35">
+            <img src="NostroArduino.jpg" alt="Schema circuito Arduino LM35">
         </div>
         <div id="description">
             <h3 style="color: magenta" id="descrizione">Descrizione del progetto</h3>
             <p>
-                Questo semplice progetto permette di misurare la temperatura utilizzando il sensore LM35 e una scheda Arduino UNO.
-                Il sensore invia un segnale analogico proporzionale alla temperatura, che viene letto e convertito in gradi Celsius da Arduino.
-                Il risultato viene mostrato sul monitor seriale ogni secondo.
+                nel nostro progetto di Arduino, all'avvio, il sistema richiede una password tramite il tastierino.
+                inserendo il codice "4222" attiva la gestione di temperatura:
+                e fa vedere che se supera una soglia, la ventola presente si attiva e inizia a girare; il valore viene mostrato dopo sullo schermo LCD.
+                inseremdo il codice "6555" attiva la gestione della luminosità:
+                e fa vedere che la luminosità rilevata sia inferiore a una soglia prestabilita, e quindi un LED (e un'altra uscita) si attivano;
+                il livello è visualizzato sullo schermo LCD.
+                infine dopo ogni funzione, si torna alla schermata principale.
             </p>
         </div>
         <div id="componenti">
             <h3 style="color: magenta" id="componenti">Componenti utilizzati</h3>
             <ul>
-                <li>1x Arduino UNO</li>
-                <li>1x Sensore di temperatura LM35</li>
-                <li>Cavi jumper</li>
+                <li>Arduino uno R3</li>
                 <li>Breadboard</li>
-                <li>USB cable</li>
+                <li>Tastierino 4x4</li>
+                <li>LCD 16x2</li>
+                <li>Fotoresistore</li>
+                <li>Potenziometro</li>
+                <li>NPN Transistor (BJT)</li>
+                <li>Termoresistore</li>
+                <li>Mottore CC (con ventola)</li>
+                <li>3x resistenze da 220 ohm</li>
+                <li>2x resistenza da 1K ohm</li>
+                <li>1x resistenza da 10K ohm</li>
+                <li>2x led</li>
+                <li>23 cavi</li>
             </ul>
         </div>
         <div id="codice">
             <h3 style="color: magenta" id="codice">Codice Arduino</h3>
             <pre>
-int lm35Pin = A0;
-float temperatura;
+#include <.LiquidCrystal.h> // serve per controllare il display LCD
+#include <.Keypad.h>        // serve per usare il tastierino
+#include <.math.h>          // serve per funzioni matematiche (tipo log)
 
-void setup() {
-  Serial.begin(9600);
+// variabili usate per leggere i sensori
+int valoreADC;
+float temperaturaC;
+int valoreLuce;
+float luminositaPercentuale;
+int contatore = 0;
+// Costanti per il termistore
+const float BETA = 3950;       // Costante beta
+const float R0 = 10000.0;      // Resistenza nominale a 25°C
+const float T0 = 298.15;       // Temperatura 25°C in Kelvin (25 + 273.15)
+const float R_SERIE = 10000.0; // Resistenza in serie con il termistore;
+// soglie di temperatura e luce
+const float SOGLIA_TEMPERATURA = 20.0;
+const float SOGLIA_LUMINOSITA = 50.0;
+const float SOGLIA_LUMINOSITA2 = 25.0;
+// pin collegati al display LCD
+const int pinRs = 12, pinEn = 11, pinD4 = 5, pinD5 = 4, pinD6 = 3, pinD7 = 2;
+LiquidCrystal lcd(pinRs, pinEn, pinD4, pinD5, pinD6, pinD7); // oggetto per controllare il display
+// password per accedere alle funzioni
+const String password1 = "4222";
+const String password2 = "6555";
+String passwordInserita = "";
+int modalita = 0;
+// configurazione dei tasti del tastierino
+const byte RIGHE = 3;
+const byte COLONNE = 3;
+char tasti[RIGHE][COLONNE] = {
+    {'1', '2', '3'},
+    {'4', '5', '6'},
+    {'7', '8', '9'},
+};
+byte pinRighe[RIGHE] = {13, 10, 9};
+byte pinColonne[COLONNE] = {8, 7, 6};
+Keypad tastierino = Keypad(makeKeymap(tasti), pinRighe, pinColonne, RIGHE, COLONNE);
+// funzione che legge 4 tasti dal tastierino come password
+void leggiPassword() {
+    passwordInserita = "";     // azzera la password
+    lcd.clear();               // pulisce il display
+    lcd.write("Enter password"); // scrive il messaggio
+    lcd.setCursor(0, 1);       // va sulla riga sotto
+                    
+    for (int i = 0; i < 4;) {
+        char tasto = tastierino.getKey(); // legge un tasto
+        if (tasto != NO_KEY) {
+            passwordInserita += tasto;  // lo aggiunge alla stringa
+            lcd.write('*');             // mostra un asterisco
+            i++;                        // conta i 4 tasti
+        }
+    }
 }
+// controlla se la password è giusta
+void verificaPassword() {
+    lcd.clear();
+    if (passwordInserita == password1 || passwordInserita == password2) {
+        // stampa "Success" lettera per lettera con codice ASCII
+        lcd.write(83); // S
+        lcd.write(117); // u
+        lcd.write(99); // c
+        lcd.write(99); // c
+        lcd.write(101); // e
+        lcd.write(115); // s
+        lcd.write(115); // s
+                    
+        // decide la modalità in base alla password
+        modalita = (passwordInserita == password1) ? 1 : 2;
+        } else {
+            // se la password è sbagliata mostra il messaggio
+            const char* msg = "password errata";
+            for (int i = 0; msg[i] != '\0'; i++) {
+                lcd.write(msg[i]);
+            }
+        }
+        delay(2000); // aspetta 2 secondi
+}
+// legge la temperatura dal termistore e attiva un motore se troppo alta
+void gestisciTemperatura() {
+    valoreADC = analogRead(A0); // legge il valore analogico
 
+    float tensione = valoreADC * (5.0 / 1023.0);
+    float R = R_SERIE * (5.0 / tensione - 1.0); // calcola la resistenza
+
+    float temperaturaK = 1.0 / (1.0 / T0 + (1.0 / BETA) * log(R / R0)); // formula di Steinhart
+    temperaturaC = temperaturaK - 273.15; // converte in gradi Celsius
+                    
+    lcd.clear();
+    // scrive "Temp: X C" con caratteri ASCII
+    lcd.write(84);  // T
+    lcd.write(101); // e
+    lcd.write(109); // m
+    lcd.write(112); // p
+    lcd.write(58);  // :
+    lcd.write(32);  // spazio
+    lcd.print(round(temperaturaC)); // stampa il numero
+    lcd.write(32);  // spazio
+    lcd.write(67);  // C
+    delay(1500); // aspetta 1 secondo e mezzo
+                    
+    if (temperaturaC > SOGLIA_TEMPERATURA) {
+        lcd.clear();
+        lcd.write("Motore ON"); // accende il motore
+                    
+        contatore = 0;
+        while (contatore < 100) {
+            digitalWrite(A4, HIGH);
+            delay(100);
+            digitalWrite(A4, LOW);
+            contatore++;
+        }
+    } else {
+        lcd.clear();
+        // scrive "Temp OK"
+        lcd.write(84);  // T
+        lcd.write(101); // e
+        lcd.write(109); // m
+        lcd.write(112); // p
+        lcd.write(32);  // spazio
+        lcd.write(79);  // O
+        lcd.write(75);  // K
+        delay(1000);
+    }
+}
+// legge la luce e accende delle uscite in base alla soglia
+    void gestisciLuminosita() {
+    valoreLuce = analogRead(A1); // legge la luce
+    luminositaPercentuale = map(valoreLuce, 6, 679, 0, 100); // converte in %
+    luminositaPercentuale = constrain(luminositaPercentuale, 0, 100); // la blocca tra 0 e 100
+                    
+    lcd.clear();
+    // scrive "Lumix: X%"
+    lcd.write(76);  // L
+    lcd.write(117); // u
+    lcd.write(109); // m
+    lcd.write(105); // i
+    lcd.write(120); // x
+    lcd.write(58);  // :
+    lcd.write(32);  // spazio
+    lcd.print(luminositaPercentuale);
+    lcd.write(37); // %
+                    
+    if (luminositaPercentuale < SOGLIA_LUMINOSITA) {
+        for (int i = 0; i < 100; i++) {
+            digitalWrite(A5, HIGH); // accende la prima luce
+            if (luminositaPercentuale < SOGLIA_LUMINOSITA2) {
+                digitalWrite(A3, HIGH); // accende anche la seconda
+            }
+            delay(100);
+            digitalWrite(A5, LOW);
+            digitalWrite(A3, LOW);
+        }
+    } else {
+        lcd.setCursor(0, 1);
+        // scrive "Luce sufficiente"
+        const char* msg = "Luce sufficiente";
+        for (int i = 0; msg[i] != '\0'; i++) {
+            lcd.write(msg[i]);
+        }
+        delay(1000);
+    }
+}
+// resetta il display e azzera la modalità
+                    
+void resettaLCD() {
+    lcd.clear();
+    lcd.print("Enter password");
+    // Scrivo "Enter password" carattere per carattere
+    lcd.write(69);
+    lcd.write(110);
+    lcd.write(116);
+    lcd.write(101);
+    lcd.write(114);
+    lcd.write(32);
+    lcd.write(112);
+    lcd.write(97);
+    lcd.write(115);
+    lcd.write(115);
+    lcd.write(119);
+    lcd.write(111);
+    lcd.write(114);
+    lcd.write(100);
+    lcd.setCursor(0, 1);
+    modalita = 0;
+}
+// parte iniziale del programma
+void setup() {
+    Serial.begin(9600);
+    pinMode(A3, OUTPUT);
+    pinMode(A4, OUTPUT);
+    pinMode(A5, OUTPUT);
+    lcd.begin(16, 2); // imposta il display
+    resettaLCD();     // mostra "Enter password"
+}
+// ciclo continuo del programma
 void loop() {
-  int valore = analogRead(lm35Pin);
-  temperatura = valore * 0.48828125;
-  Serial.print("Temperatura: ");
-  Serial.print(temperatura);
-  Serial.println(" °C");
-  delay(1000);
+    leggiPassword();     // chiede la password
+    verificaPassword();  // controlla la password
+                    
+    if (modalita == 1) {
+        gestisciTemperatura(); // se password1: va alla temperatura
+    }
+                    
+    if (modalita == 2) {
+        gestisciLuminosita(); // se password2: va alla luce
+    }
+                    
+    resettaLCD(); // dopo torna al menu iniziale
 }
             </pre>
         </div>
         <div id="link">
-            <h3 style="color: magenta" id="github">Link al progetto</h3>
+            <h3 style="color: magenta" id="tinkercard">Link al progetto</h3>
             <p>
                 il nostro progetto lo si può trovare su Tinkercard: <br>
-                <a href="https://github.com/esempio/sensore-temperatura-arduino" target="_blank">➡️ link di Tinkercard</a>
+                <a href="https://www.tinkercad.com/things/h0NG4HTRcHi-progetto-leo-seba?sharecode=1JsWDixQ1WKMz9OYsv-lzTSUqhWvLDzFaR2rBub5Z2s" target="_blank">➡️ link di Tinkercard</a>
             </p>
         </div>
         <div id="footer">
