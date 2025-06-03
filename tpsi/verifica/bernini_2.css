@@ -1,0 +1,23 @@
+#menu{
+    float:left;
+    background-color:#f4f4f4;
+    width:30%;
+    height: 700px;;
+    color:black;
+    font-size: medium;
+}
+#content{
+    float:right;
+    width:70%;
+    background-color: rgb(250, 250, 250);
+    height: 700px;
+    font-size: larger;
+    color:black;
+
+}
+#footer{
+    background-color: rgb(224, 213, 197);
+    text-align: center;
+    color:black;
+    
+}
