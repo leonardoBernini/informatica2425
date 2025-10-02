@@ -1,43 +1,93 @@
-/*scrivere un programma in linguaggio c che :
-    1) allochi dinamicamente un array iniziale di n numeri
-    2)  inserimento dei valori
-    3)stampa array
-    4)calcoli la somma degli elementi multipli di 3
-    5) creare un nuovo arrey contenetr solo valori dispari
-    */
+/* Scrivere un linguaggio C che:
+    1. Allochi un array iniziale di numeri;
+    2. Inserimento dei valori;
+    3. Stampa array;
+    4. Calcoli la somma degli elementi multipli di 3;
+    5. Creare un nuovo array contenente solo valori dispari;
+*/
+
 #include <stdio.h>
-#include<stdlib.h>
-int* creaArey(int n){
-    int *arrey;
+#include <stdlib.h>
+
+int* CreaVettore(int _N){
+    int *_vettore=NULL;
+
+    _vettore=(int*)malloc(_N *sizeof(int));
+
+    if(_vettore==NULL){
+        printf("Errore di allocazione!\n");
+        return NULL;
+    }
+    return _vettore;
+}
+
+int* InserisciValori(int *_vettore, int _N){
+
+    for(int i=0; i<_N; i++){
+        printf("inserisci l'elemento: ");
+        scanf("%d", &_vettore[i]);
+    }
+    return _vettore;
+}
+
+void StampaVettore(int *_vettore, int _N){
     
-    arrey=(int*)malloc(n*sizeof(int));
-    if( arrey== NULL){
-        return 1;
+    printf("hai inserito i seguenti elementi: ");
+    for(int i=0; i<_N; i++){
+        printf("%d\t", _vettore[i]);
     }
-    return arrey;
+    printf("\n");
+}
+
+int CalcolaSomma(int *_vettore, int _N){
+    int somma=0;
     
-}
-int* riempiArrey(int n,int *arrey){
-    for(int i=0; i<n;i++){
-        printf("inserisci il %d elemento: ",i+1);
-        scanf("%d",&arrey[i]);
+    for(int i=0; i<_N; i++){
+        if(_vettore[i]%3==0){
+            somma+=_vettore[i];
+        }
     }
-    return arrey;
+    return somma;
 }
-int stampaArey(int n,int *arrey){
-    for(int i=0; i<n;i++){
-        printf("%d\t",arrey[i]);
+
+int *EstraiDispari(int *_vettore, int _N, int *_DimDispari){
+    int *_dispari=NULL;
+    *_DimDispari=0;
+
+    for(int i=0; i<_N; i++){
+        if(_vettore[i]%2!=0){
+            (*_DimDispari)++;
+            int *temp = realloc(_dispari, (*_DimDispari)*sizeof(int));
+            if(temp==NULL){
+                printf("Errore di allocazione!\n");
+                free(_dispari);
+                return NULL;
+            }
+            _dispari=temp;
+            _dispari[(*_DimDispari)-1] = _vettore [i];
+        }
     }
+    return _dispari;
 }
+
 int main(){
-    int *arrey=NULL;
-    int n=0;
+    int *vettore=NULL;  //puntatore al vettore
+    int *dispari=NULL;
+    int N, DimDispari;
+
     do{
         printf("inserisci la quantità degli elementi: ");
-        scanf("%d", &n);
-    }while(n<0);
-    arrey=creaArey(n);
-    arrey=riempiArrey(n,arrey);
-    stampaArey(n,arrey);
-    free(arrey);
+        scanf("%d", &N);
+    }while(N<0);
+
+    vettore = CreaVettore(N);
+    vettore = InserisciValori(vettore, N);
+    StampaVettore(vettore, N);
+
+    printf("la somma degli elementi divisibili per 3 vale: %d\n", CalcolaSomma(vettore, N));
+    dispari= EstraiDispari(vettore,  N, &DimDispari); 
+    printf("L'array contenente gli elementi dispari risulta: ");
+    StampaVettore(dispari, DimDispari);
+    free(vettore);
+    free(dispari);
 }
