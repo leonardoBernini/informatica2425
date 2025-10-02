@@ -71,7 +71,7 @@ int *EstraiDispari(int *_vettore, int _N, int *_DimDispari){
 }
 
 int main(){
-    int *vettore=NULL;  //puntatore al vettore
+    int *vettore=NULL;  
     int *dispari=NULL;
     int N, DimDispari;
 
@@ -86,7 +86,7 @@ int main(){
 
     printf("la somma degli elementi divisibili per 3 vale: %d\n", CalcolaSomma(vettore, N));
     dispari= EstraiDispari(vettore,  N, &DimDispari); 
-    printf("L'array contenente gli elementi dispari risulta: ");
+    printf("L'array contenente li elementi dispari risulta: ");
     StampaVettore(dispari, DimDispari);
     free(vettore);
     free(dispari);
