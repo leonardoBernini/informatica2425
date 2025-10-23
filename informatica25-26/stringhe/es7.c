@@ -10,8 +10,6 @@ Stringa crea_stringa_dinamica(){
     int capacity = 0;  
     char c;
 
-    
-
     while ((c = getchar()) != '\n' && c != EOF) {  
         if (size + 1 >= capacity) {
             capacity += 10; 
@@ -24,31 +22,35 @@ Stringa crea_stringa_dinamica(){
         str[size++] = c;
     }
     str[size] = '\0';
-
     return str;
 }
 Stringa elimina_valore(Stringa s){
-    int p, n;
     int len=strlen(s);
-    Stringa vett;
-    strcpy(vett,s);
-    p=0;
+    Stringa s2=(Stringa)malloc((len+1)*sizeof(char));
     
-    for(int i=0; i<len;i++){
-        if(vett[i]== ' '){                                                                
-            for(int j=i;j<len-1;j++){
-                vett[j]=vett[j+1];
-                p++;
+    if(s2==NULL){
+        exit(1);
+    }
+    strcpy(s2,s);
+    
+    for(int i=0; i<=len;i++){
+        if(s2[i]>='A'&& s2[i]<='Z'){
+                s2[i]+=32;
+            }
+            
+        if(s2[i]== ' '|| s2[i]==39){                                                                
+            for(int j=i;j<len;j++){
+                s2[j]=s2[j+1];
             }
             len--;
             i--;
         }
     }
-    vett=(Stringa)realloc(vett,len*sizeof(char));
-    if(vett==NULL){
+    s2=(Stringa)realloc(s2,(len+1)*sizeof(char));
+    if(s2==NULL){
         exit(1) ;
     }
-    return vett;
+    return s2;
 }
 Bool palindroma(Stringa s){
     int len;
@@ -63,15 +65,17 @@ Bool palindroma(Stringa s){
 int main(){
     Stringa s1;
     Stringa s2;
-    Bool pali;
 
     s1=crea_stringa_dinamica();
     s2=elimina_valore(s1);
-    pali= palindroma(s2);
-    if(pali){
-        printf("%s è palindroma",s1);
+   
+    if(palindroma(s2)){
+        printf("%s è palindroma\n",s1);
+    }else{
+        printf("%s non è palindroma",s1);
     }
 
     
-    
+    free(s1);
+    free(s2);   
 }
