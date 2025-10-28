@@ -38,7 +38,7 @@ Stringa elimina_valore(Stringa s){
                 s2[i]+=32;
             }
             
-        if(s2[i]== ' '|| s2[i]==39){                                                                
+        if(s2[i]== ' '|| s2[i]=='\''){                                                                
             for(int j=i;j<len;j++){
                 s2[j]=s2[j+1];
             }
