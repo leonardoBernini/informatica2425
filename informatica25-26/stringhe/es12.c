@@ -47,7 +47,7 @@ stringa crea_stringa_dinamica(){
 stringa ccc(stringa s, stringa codice, int* pc){
     int cnt=0;
     for(int i=0;s[i]!='\0'&& cnt<3; i++){
-        if(s[i]!='a'&& s[i]!='e'&& s[i]!='i'&& s[i]!='o'&& s[i]!='u'){
+        if(s[i]!='a'&& s[i]!='e'&& s[i]!='i'&& s[i]!='o'&& s[i]!='u'){  //strchr("aeiou", s[i]) == NULL
             codice[cnt]=s[i];
             cnt++;
         }
@@ -72,7 +72,7 @@ stringa nnn(stringa s, stringa codice, int* pc){
             consonanti++;
         }
     }
-    if(consonanti==4){
+    if(consonanti>=4){
         consonanti=0;
         for(int i=0;s[i]!='\0'&& cnt<3; i++){
             if(s[i]!='a'&& s[i]!='e'&& s[i]!='i'&& s[i]!='o'&& s[i]!='u'){
@@ -204,6 +204,7 @@ stringa llll(stringa codice, int* pc){
         else if (strcmp(comune, "serravalle a po") == 0) strcpy(codice_comune, "I663"), valido = 1;
         else if (strcmp(comune, "sustinente") == 0) strcpy(codice_comune, "L016"), valido = 1;
         else if (strcmp(comune, "villimpenta") == 0) strcpy(codice_comune, "M045"), valido = 1;
+        else if (strcmp(comune, "chiavenna") == 0) strcpy(codice_comune, "C623"), valido = 1;
         else {
             printf("comune non valido o non nella lista, riprova.\n");
             free(comune);
