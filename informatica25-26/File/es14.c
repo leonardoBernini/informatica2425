@@ -83,15 +83,15 @@ void eliminacontatto(){
     fclose(fptmp);
     FILE *fpm = fopen("rubrica.dat", "wb");
     FILE *fptmpm = fopen("temp.dat", "rb");
-    if (fp == NULL) {
+    if (fpm == NULL) {
         printf("Rubrica vuota!\n");
         return;
     }
-    if (fptmp == NULL) {
+    if (fptmpm == NULL) {
         printf("Rubrica vuota!\n");
         return;
     }
-    while(fread(&c,sizeof(Contatto),1,fptmp)){
+    while(fread(&c,sizeof(Contatto),1,fptmpm)){
         fwrite(&c,sizeof(Contatto),1,fpm);
     }
     fclose(fpm);
@@ -126,6 +126,7 @@ void separacontatti(){
         }
 
     }
+    fclose(fp);
     fclose(fpf);
     fclose(fpm);
 
